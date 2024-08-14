@@ -9,14 +9,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.noteapp.R
 import com.example.noteapp.databinding.FragmentOnBoardBinding
 import com.example.noteapp.ui.adapter.OnBoardAdapter
-import com.example.noteapp.ui.fragment.onboard.OnBoardPagingFragment.Companion.ARG_ONBOARD_POSITION
-import com.google.android.material.tabs.TabLayout
 
 
 class OnBoardFragment : Fragment() {
 
     private lateinit var binding: FragmentOnBoardBinding
-    private lateinit var TabLayout: TabLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#D88B02" /> <!-- Change this color to your desired FAB color -->
+    <corners android:radius="28dp" /> <!-- Set the radius to half the width/height to make it circular -->
+</shape>

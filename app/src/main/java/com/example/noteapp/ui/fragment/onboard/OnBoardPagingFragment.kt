@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.airbnb.lottie.Lottie
 import com.example.noteapp.R
 import com.example.noteapp.databinding.FragmentOnBoardPagingBinding
+import com.example.noteapp.utils.PreferenceHelper
 import com.google.android.material.tabs.TabLayout
 
 
@@ -26,6 +28,7 @@ class OnBoardPagingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initialize()
+        setupListeners()
 
     }
 
@@ -48,6 +51,15 @@ class OnBoardPagingFragment : Fragment() {
                 txtStart.visibility = View.VISIBLE
 
             }
+        }
+    }
+
+    private fun setupListeners() {
+        val sharedPreferences = PreferenceHelper()
+        sharedPreferences.unit(requireContext())
+        binding.txtStart.setOnClickListener {
+            findNavController().navigate(R.id.action_onBoardFragment_to_noteFragment, null)
+            sharedPreferences.onBoardShown = true
         }
     }
 

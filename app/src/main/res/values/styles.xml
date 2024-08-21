@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Color.Dot.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">#D88B02</item>
+    </style>
+</resources>

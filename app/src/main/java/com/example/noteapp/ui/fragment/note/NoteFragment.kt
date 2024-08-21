@@ -5,17 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noteapp.App
 import com.example.noteapp.R
+import com.example.noteapp.data.models.NoteModel
 import com.example.noteapp.databinding.FragmentNoteBinding
+import com.example.noteapp.interfaces.OnClickItem
 import com.example.noteapp.ui.adapter.NoteAdapter
 
-class NoteFragment : Fragment() {
+class NoteFragment : Fragment(), OnClickItem {
 
     private lateinit var binding: FragmentNoteBinding
-    private val noteAdapter = NoteAdapter()
+    private val noteAdapter = NoteAdapter(this, this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +50,26 @@ class NoteFragment : Fragment() {
 
     private fun getData() {
         App.appDataBase?.Dao()?.getAll()?.observe(viewLifecycleOwner){
-            noteAdapter.submitList(it)
+            noteAdapter.submitList(it.reversed())
         }
+    }
+
+    override fun onLongClick(noteModel: NoteModel) {
+        val builder = AlertDialog.Builder(requireContext())
+        with(builder){
+            setTitle("Вы точно хотите удалить запись?")
+            setPositiveButton("Да"){ dialog, _ ->
+                App.appDataBase?.Dao()?.deleteNote(noteModel)
+            }
+            setNegativeButton("Нет"){ dialog, _ ->
+                dialog.cancel()
+            }
+            show()
+        }
+    }
+
+    override fun onClick(noteModel: NoteModel) {
+        val action = NoteFragmentDirections.actionNoteFragmentToNoteDetailFragment(noteModel.id)
+        findNavController().navigate(action)
     }
 }

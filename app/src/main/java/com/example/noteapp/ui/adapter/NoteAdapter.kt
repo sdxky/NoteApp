@@ -12,7 +12,8 @@ import com.example.noteapp.ui.fragment.note.NoteFragment
 
 class NoteAdapter(
     private val onLongClick: OnClickItem,
-    private val onClick: OnClickItem
+    private val onClick: OnClickItem,
+    private var isGridLayout: Boolean
 ) : ListAdapter<NoteModel, NoteAdapter.ViewHolder>(DiffcallBack()) {
 
     class ViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -45,6 +46,11 @@ class NoteAdapter(
         holder.itemView.setOnClickListener {
             onClick.onClick(getItem(position))
         }
+        if (isGridLayout) {
+            holder.itemView.layoutParams.height = 250
+        } else {
+            holder.itemView.layoutParams.height = 150
+        }
     }
 
     class DiffcallBack : DiffUtil.ItemCallback<NoteModel>() {
@@ -55,6 +61,10 @@ class NoteAdapter(
         override fun areContentsTheSame(oldItem: NoteModel, newItem: NoteModel): Boolean {
             return oldItem == newItem
         }
-
     }
+
+   fun setLayoutType(isGridLayout: Boolean) {
+        this.isGridLayout = isGridLayout
+    }
+
 }

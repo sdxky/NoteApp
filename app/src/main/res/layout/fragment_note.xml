@@ -34,7 +34,7 @@
             android:textSize="20sp" />
 
         <ImageButton
-            android:id="@+id/btn_grid"
+            android:id="@+id/btn_change_layout"
             android:layout_width="18dp"
             android:layout_height="16dp"
             android:layout_gravity="end"

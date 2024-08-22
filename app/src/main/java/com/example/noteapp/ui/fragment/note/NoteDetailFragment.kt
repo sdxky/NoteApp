@@ -19,6 +19,7 @@ class NoteDetailFragment : Fragment() {
     private lateinit var binding: FragmentNoteDetailBinding
     private val noteDate: String = SimpleDateFormat("dd MMMM", Locale.getDefault()).format(Date())
     private val noteTime: String = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+    private var noteId: Int? = null
     var color = "black"
 
     override fun onCreateView(
@@ -31,9 +32,23 @@ class NoteDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        updateNote()
         colorChange()
         initialize()
         setupListeners()
+    }
+
+    private fun updateNote() {
+        arguments.let {
+            noteId = it?.getInt("noteId", -1)
+        }
+        if (noteId != -1){
+            val argsNote = App.appDataBase?.Dao()?.getByID(noteId!!)
+            argsNote?.let {
+                binding.etTitle.setText(it.title)
+                binding.etDescription.setText(it.description)
+            }
+        }
     }
 
     private fun colorChange() {
@@ -76,7 +91,14 @@ class NoteDetailFragment : Fragment() {
             val etTitle = binding.etTitle.text.toString().trim()
             val etDescription = binding.etDescription.text.toString().trim()
 
-            App.appDataBase?.Dao()?.insert(NoteModel(etTitle, etDescription, noteTime, noteDate))
+            if (noteId != -1){
+                val updateNote = NoteModel(etTitle, etDescription, noteTime, noteDate)
+                updateNote.id = noteId!!
+                App.appDataBase?.Dao()?.updateNote(updateNote)
+            }else{
+                App.appDataBase?.Dao()?.insert(NoteModel(etTitle, etDescription, noteTime, noteDate))
+            }
+
             findNavController().navigateUp()
         }
         binding.toolbarDetail.setNavigationOnClickListener{

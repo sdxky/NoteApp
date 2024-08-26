@@ -58,7 +58,7 @@ class OnBoardPagingFragment : Fragment() {
         val sharedPreferences = PreferenceHelper()
         sharedPreferences.unit(requireContext())
         binding.txtStart.setOnClickListener {
-            findNavController().navigate(R.id.action_onBoardFragment_to_noteFragment, null)
+            findNavController().navigate(R.id.action_onBoardFragment_to_signUpFragment, null)
             sharedPreferences.onBoardShown = true
         }
     }

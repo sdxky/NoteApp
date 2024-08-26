@@ -31,9 +31,10 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences.unit(this)
         if (!sharedPreferences.onBoardShown) {
             navController.navigate(R.id.onBoardFragment)
+        } else if (!sharedPreferences.signUpShown) {
+            navController.navigate(R.id.signUpFragment)
         } else{
             navController.navigate(R.id.noteFragment)
-
         }
 
 
